@@ -24,5 +24,9 @@ jobs:
         with:
           java-version: 21
       #запуск сборки проекта
-      - name: Maven Package
-        run: mvn -B clean package -DskipTests
+      - name: Maven Verify
+        run: mvn -B clean verify
+      - name: Test Coverage
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
