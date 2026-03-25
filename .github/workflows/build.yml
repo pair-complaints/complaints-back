@@ -1,0 +1,28 @@
+name: Build
+
+#описание события, по которому будет запускаться скрипт
+on:
+  #при каждом создании ПР
+  pull_request:
+    branches:
+      - '*'
+  #при каждом пуше в мейн
+  push:
+    branches:
+      - 'main'
+
+#описание заданий (jobs) и шаги выполнения (steps) для каждой задачи.
+jobs:
+  build:
+    #выбор ОС
+    runs-on: ubuntu-22.04
+    steps:
+      #используем другие экшены
+      - uses: actions/checkout@v1
+      - name: set up JDK 21
+        uses: actions/setup-java@v1
+        with:
+          java-version: 21
+      #запуск сборки проекта
+      - name: Maven Package
+        run: mvn -B clean package -DskipTests
