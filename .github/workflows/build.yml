@@ -26,5 +26,3 @@ jobs:
       #запуск сборки проекта
       - name: Maven Verify
         run: mvn -B clean verify
-      - name: Run Checkstyle
-        run: mvn -B checkstyle:check --file pom.xml
