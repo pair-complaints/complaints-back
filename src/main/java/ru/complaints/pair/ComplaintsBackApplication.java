@@ -6,6 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ComplaintsBackApplication {
 
+    /**
+     * Старт приложения
+     */
     public static void main(String[] args) {
         SpringApplication.run(ComplaintsBackApplication.class, args);
     }
