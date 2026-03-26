@@ -1,0 +1,26 @@
+services:
+  complaints-backend:
+    container_name: complaints-backend
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - "8181:8181"
+    depends_on:
+      - postgres
+    environment:
+      SERVER_PORT: 8181
+      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/complaints_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
+
+  postgres:
+    container_name: postgres
+    image: postgres:16-alpine
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: complaints_db
