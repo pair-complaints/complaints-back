@@ -7,10 +7,11 @@ services:
     ports:
       - "8181:8181"
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     environment:
       SERVER_PORT: 8181
-      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/complaints_db
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/complaints_db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: password
 
@@ -24,3 +25,8 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: complaints_db
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d complaints_db" ]
+      interval: 2s
+      timeout: 10s
+      retries: 10
