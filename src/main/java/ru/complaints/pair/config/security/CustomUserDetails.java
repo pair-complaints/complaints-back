@@ -11,7 +11,6 @@ import java.util.UUID;
 
 @Getter
 public class CustomUserDetails implements UserDetails {
-
     private final UUID userId;
     private final String username;
     private final String password;

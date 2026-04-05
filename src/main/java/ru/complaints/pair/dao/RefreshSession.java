@@ -1,6 +1,11 @@
 package ru.complaints.pair.dao;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
@@ -25,6 +30,7 @@ public class RefreshSession {
     @Column(name = "user_id")
     private UUID userId;
 
+    @Column(unique = true)
     private String refreshTokenHash;
 
     private String fingerprint;

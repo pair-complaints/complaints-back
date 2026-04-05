@@ -8,7 +8,13 @@ import java.util.UUID;
 
 public interface UserCredentialRepository extends JpaRepository<UserCredential, UUID> {
 
+    /**
+     * Поиск пользователя по переданному username
+     */
     Optional<UserCredential> findByUsername(String username);
 
+    /**
+     * Проверка, существует ли пользователь с переданным username
+     */
     boolean existsByUsername(String username);
 }

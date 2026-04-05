@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/example")
 public class ExampleController {
 
+    /**
+     * Тестовый, потом удалить
+     */
     @GetMapping
     @Operation(summary = "Доступен только авторизованным пользователям")
     public String example() {

@@ -4,9 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.complaints.pair.config.security.CustomUserDetails;
 import ru.complaints.pair.dao.UserCredential;
 import ru.complaints.pair.dao.repository.UserCredentialRepository;
+import ru.complaints.pair.exception.DuplicatedUsernameException;
 
 @Service
 @RequiredArgsConstructor
@@ -18,11 +21,10 @@ public class UserCredentialService implements UserDetailsService {
      *
      * @return созданный пользователь
      */
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public CustomUserDetails create(String username, String password) {
-        //todo(a.steshchenko) подумать над многопоточкой???
         if (userCredentialRepository.existsByUsername(username)) {
-            // Заменить на свои исключения
-            throw new RuntimeException("Пользователь с таким именем уже существует");
+            throw new DuplicatedUsernameException("User with username '%s' already exists".formatted(username));
         }
         UserCredential userCredential = new UserCredential();
         userCredential.setUsername(username);
@@ -32,7 +34,7 @@ public class UserCredentialService implements UserDetailsService {
     }
 
     @Override
-    public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public CustomUserDetails loadUserByUsername(String username) {
         var userCredential = userCredentialRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
         return new CustomUserDetails(userCredential);

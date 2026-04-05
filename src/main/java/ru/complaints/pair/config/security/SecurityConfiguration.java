@@ -27,6 +27,9 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
+    /**
+     * Настройка security
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
@@ -40,6 +43,9 @@ public class SecurityConfiguration {
         return http.build();
     }
 
+    /**
+     * Создает бин PasswordEncoder с использованием BCrypt алгоритма для безопасного хеширования паролей.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

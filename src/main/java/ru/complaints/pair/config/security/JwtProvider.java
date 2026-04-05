@@ -1,8 +1,13 @@
 package ru.complaints.pair.config.security;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,9 +40,6 @@ public class JwtProvider {
 
     /**
      * Генерация access токена
-     *
-     * @param userDetails данные пользователя
-     * @return токен
      */
     public String generateAccessToken(@NonNull UserDetails userDetails) {
         LocalDateTime now = LocalDateTime.now();
@@ -51,9 +53,6 @@ public class JwtProvider {
 
     /**
      * Генерация refresh токена
-     *
-     * @param userDetails данные пользователя
-     * @return токен
      */
     public String generateRefreshToken(@NonNull UserDetails userDetails) {
         LocalDateTime now = LocalDateTime.now();
@@ -65,18 +64,30 @@ public class JwtProvider {
                 .compact();
     }
 
+    /**
+     * Валидация access токена
+     */
     public boolean validateAccessToken(@NonNull String token) {
         return validateToken(token, jwtAccessSecret);
     }
 
+    /**
+     * Валидация refresh токена
+     */
     public boolean validateRefreshToken(@NonNull String token) {
         return validateToken(token, jwtRefreshSecret);
     }
 
+    /**
+     * Получение клеймов access токена
+     */
     public Claims getAccessClaims(@NonNull String token) {
         return getClaims(token, jwtAccessSecret);
     }
 
+    /**
+     * Получения клеймов refresh токена
+     */
     public Claims getRefreshClaims(@NonNull String token) {
         return getClaims(token, jwtRefreshSecret);
     }

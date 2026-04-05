@@ -21,6 +21,10 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final RefreshSessionService refreshSessionService;
 
+    /**
+     * Регистрация нового пользователя
+     * Если пользователь с таким username уже существует, то выкенется исключение
+     */
     public JwtAuthenticationResponse signUp(SignUpRequest request) {
         String passwordHash = passwordEncoder.encode(request.password());
         CustomUserDetails user = userCredentialService.create(request.username(), passwordHash);
@@ -29,6 +33,9 @@ public class AuthenticationService {
         return response;
     }
 
+    /**
+     * Авторизация существующего пользователя по username и password
+     */
     public JwtAuthenticationResponse signIn(SignInRequest request) {
         CustomUserDetails user = userCredentialService.loadUserByUsername(request.username());
         if (passwordEncoder.matches(request.password(), user.getPassword())) {
@@ -39,6 +46,10 @@ public class AuthenticationService {
         throw new AuthException("Invalid username or password");
     }
 
+    /**
+     * Получение нового access токена по refresh токену
+     * Refresh токен тоже обновляется
+     */
     public JwtAuthenticationResponse generateNewAccessToken(RefreshJwtRequest request) {
         if (jwtProvider.validateRefreshToken(request.refreshToken())) {
             String username = jwtProvider.getRefreshClaims(request.refreshToken()).getSubject();

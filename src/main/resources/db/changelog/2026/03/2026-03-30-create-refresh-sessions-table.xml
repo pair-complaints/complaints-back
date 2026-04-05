@@ -17,7 +17,8 @@
                 <constraints nullable="false"/>
             </column>
             <column name="refresh_token_hash" type="VARCHAR(255)">
-                <constraints nullable="false"/>
+                <constraints nullable="false"
+                             unique="true"/>
             </column>
             <column name="expiration_date" type="TIMESTAMP">
                 <constraints nullable="false"/>

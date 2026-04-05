@@ -8,6 +8,9 @@ import java.util.HexFormat;
 public class HashUtils {
     private static final String SHA_256 = "SHA-256";
 
+    /**
+     * Метод для генерации SHA256 хэша переданной строки
+     */
     public static String generateSHA256Hash(String text) {
         try {
             MessageDigest digest = MessageDigest.getInstance(SHA_256);
