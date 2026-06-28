@@ -4,5 +4,6 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
-
+    <include file="/db/changelog/2026/03/2026-03-28-create-user-credentials-table.xml"/>
+    <include file="/db/changelog/2026/03/2026-03-30-create-refresh-sessions-table.xml"/>
 </databaseChangeLog>
