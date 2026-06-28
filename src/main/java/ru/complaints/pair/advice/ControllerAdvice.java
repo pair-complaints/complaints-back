@@ -10,11 +10,17 @@ import ru.complaints.pair.exception.DuplicatedUsernameException;
 @RestControllerAdvice
 public class ControllerAdvice {
 
+    /**
+     * Обработка исключения об ошибке авторизации
+     */
     @ExceptionHandler(AuthException.class)
     public ResponseEntity<String> handleAuthException(AuthException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
     }
 
+    /**
+     * Обработка исключения о дублирующемся юзернейме
+     */
     @ExceptionHandler(DuplicatedUsernameException.class)
     public ResponseEntity<String> handleDuplicatedUsernameException(DuplicatedUsernameException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
